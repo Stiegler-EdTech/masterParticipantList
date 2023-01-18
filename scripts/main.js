@@ -1,4 +1,4 @@
-import { runApp } from "./view/view";
+import { runApp } from "./view/view.js";
 
 
 runApp()

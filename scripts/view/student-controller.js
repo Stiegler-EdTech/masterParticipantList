@@ -1,5 +1,5 @@
-import { renderStudentTardyButton, renderStudentAbsenseButton } from "./student-action-buttons.js"
-import { renderSidePanel } from "./side-panel/student-panel.js";
+import { renderStudentTardyButton, renderStudentAbsenseButton } from './student-action-buttons.js'
+import { renderSidePanel } from './side-panel/student-panel.js';
 
 
 import { removeSidePanel } from "../controller/side-panel/remove-side-panel.js";

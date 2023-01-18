@@ -1,8 +1,8 @@
-import { students, tardies, absenses } from "../view/view.js"
-import { Capstone } from "./Capstone.js"
-import { Tardy } from "./Tardy.js"
-import { Absense } from "./Absense.js"
-import { Note } from "./Note.js"
+import { students, tardies, absenses } from '../view/view.js'
+import { Capstone } from './Capstone.js'
+import { Tardy } from './Tardy.js'
+import { Absense } from './Absense.js'
+import { Note } from './Note.js'
 
 export class Student {
 	constructor(userName, firstName, lastName, absenses, tardies, capstoneProject, notes, isOnProbation, hasMetWithStaff) {

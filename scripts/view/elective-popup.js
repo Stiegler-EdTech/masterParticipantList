@@ -1,5 +1,5 @@
-import { disableAllButtons } from "../controller/disbleButtons"
-import { enableAllButtons } from "../controller/enableButtons"
+import { disableAllButtons } from '../controller/disbleButtons.js'
+import { enableAllButtons } from '../controller/enableButtons.js'
 
 export function renderAddElectivePopUp(){
 	let bodyContainer = document.querySelector(".body-container")

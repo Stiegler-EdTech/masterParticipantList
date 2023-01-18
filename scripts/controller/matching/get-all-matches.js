@@ -1,14 +1,14 @@
-import { getAllFilterValues } from "../../view/filters"
-import { getProbationMatches } from "./get-probation-matches"
-import { getHasElectiveMatches } from "./get-has-elective-matches"
-import { getNotesMatches } from "./get-notes-matches"
-import { getMentorMatches } from "./get-mentor-matches"
-import { getMetMatches } from "./get-met-matches"
-import { getAbsenseMatches } from "./get-absense-matches"
-import { getTardyMatches } from "./get-tardy-matches"
-import { getCityMatches } from "./get-city-matches"
-import { getCohortMatches } from "./get-cohort-matches"
-import { getElectiveMatches } from "./get-elective-matches"
+import { getAllFilterValues } from '../../view/filters.js'
+import { getProbationMatches } from './get-probation-matches.js'
+import { getHasElectiveMatches } from './get-has-elective-matches.js'
+import { getNotesMatches } from './get-notes-matches.js'
+import { getMentorMatches } from './get-mentor-matches.js'
+import { getMetMatches } from './get-met-matches.js'
+import { getAbsenseMatches } from './get-absense-matches.js'
+import { getTardyMatches } from './get-tardy-matches.js'
+import { getCityMatches } from './get-city-matches.js'
+import { getCohortMatches } from './get-cohort-matches.js'
+import { getElectiveMatches } from './get-elective-matches.js'
 
 
 export function getAllMatches(filters, matches){

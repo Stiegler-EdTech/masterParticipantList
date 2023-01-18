@@ -1,4 +1,4 @@
-import { capstoneProjects } from "../view/view.js";
+import { capstoneProjects } from '../view/view.js';
 export class Capstone {
 	constructor(title, isGroup, student) {
 		this.title = title;

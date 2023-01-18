@@ -1,0 +1,466 @@
+.filter{
+    display: flex;
+    justify-content: space-around;
+}
+
+.multipleSelection {
+    display: flex;
+    width: 100%;
+    margin: auto;
+    margin-left: 2.5%;
+}
+.selectBox{
+    margin-right: 1%;
+}
+
+#floatingSelect option{
+    width: 100%;
+}
+
+#checkBoxes {
+    display: none;
+}
+
+#checkBoxes label {
+    font-size: 0.8em;
+    white-space: nowrap;
+}
+
+.form-check-input{
+    margin: auto 5% auto 0%;
+    width: 1.3em;
+}
+
+.checkbox-group{
+    display: flex;
+    width: fit-content;
+    margin: auto 4% auto 0%;
+}
+
+.new-participant-pop-up, .add-mentor-pop-up{
+    width: 40rem;
+    height: 27rem;
+    position: absolute;
+    top: 20vh;
+    bottom: 25vh;
+    left: 20vw;
+    right: 20vw;
+    background-color: rgb(248, 249, 250);
+    display: none;
+}
+.add-mentor-pop-up{
+    width: 30rem;
+    height: 15rem;
+    top: 25vh;
+    bottom: 25vh;
+    left: 30vw;
+    right: 30vw;
+    display: block;
+}
+.exit-pop-up-button{
+    display: flex;
+    margin: 0% 0% 0% auto;
+}
+.pop-up-title{
+    text-align: center;
+}
+.form{
+    padding: 3% 10%;
+}
+.input-group{
+    padding: 2% 0%;
+}
+.new-participant-button, .add-mentor-button, .add-capstone-button, .add-elective-button, .add-tardy-button, .add-absense-button, .add-note-button, .add-probation-button, .add-meeting-button{
+    margin: 5% auto 1% auto;
+    display: flex;
+}
+.add-capstone-pop-up{
+    width: 30rem;
+    height: 17rem;
+    position: absolute;
+    top: 25vh;
+    bottom: 25vh;
+    left: 30vw;
+    right: 30vw;
+    background-color: rgb(248, 249, 250);
+}
+.add-elective-pop-up{
+    width: 25rem;
+    height: 15rem;
+    position: absolute;
+    top: 25vh;
+    bottom: 25vh;
+    left: 35vw;
+    right: 35vw;
+    background-color: rgb(248, 249, 250);
+}
+.add-tardy-pop-up{
+    width: 25rem;
+    height: 15rem;
+    position: absolute;
+    top: 25vh;
+    bottom: 25vh;
+    left: 35vw;
+    right: 35vw;
+    background-color: rgb(248, 249, 250);
+}
+.add-absense-pop-up{
+    width: 25rem;
+    height: 15rem;
+    position: absolute;
+    top: 25vh;
+    bottom: 25vh;
+    left: 35vw;
+    right: 35vw;
+    background-color: rgb(248, 249, 250);
+}
+.add-note-pop-up{
+    width: 25rem;
+    height: 18rem;
+    position: absolute;
+    top: 25vh;
+    bottom: 25vh;
+    left: 35vw;
+    right: 35vw;
+    background-color: rgb(248, 249, 250);
+}
+.add-meeting-pop-up{
+    width: 25rem;
+    height: 15rem;
+    position: absolute;
+    top: 25vh;
+    bottom: 25vh;
+    left: 35vw;
+    right: 35vw;
+    background-color: rgb(248, 249, 250);
+}
+
+.add-probation-pop-up{
+    width: 25rem;
+    height: 15rem;
+    position: absolute;
+    top: 25vh;
+    bottom: 25vh;
+    left: 35vw;
+    right: 35vw;
+    background-color: rgb(248, 249, 250);
+}
+.actions, .actions-header{
+    width: 25%;
+}
+.side-panel{
+    width: 50rem;
+    height: 99%;
+    position: absolute;
+    top: 0vh;
+    right: 0vw;
+    background-color: rgb(248, 249, 250);
+}
+.side-panel-container{
+    width: 100%;
+    /* margin: auto; */
+    /* padding-top: 24px; */
+    padding: 24px 5% 0% 5%;
+    height: 100%;
+    overflow: scroll;
+}
+.panels{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    background-color: #e9ecef;
+    margin-bottom: 5%;
+}
+.panels button{
+    width: 100%;
+    font-size: 1.4rem;
+}
+.active-panel{
+    background-color: white;
+    border: solid 1px black;
+    font-weight: 500;
+}
+.identifier-group, .city-and-cohort-group{
+    display: flex;
+    justify-content: space-between;
+}
+.username-group, .student-id-group, .city-group, .cohort-group{
+    width: 48%;
+}
+.identifier-group label, .city-and-cohort-group label{
+    border-right: 2px solid #ced4da;
+    border-radius: .375rem;
+}
+.identifier-group input:disabled, .city-and-cohort-group input:disabled{
+    background-color: rgb(248, 249, 250);
+    border: 0px;
+}
+
+.name-group{
+    width: 100%;
+}
+.label-and-edit-button{
+    margin-top:1%;
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    font-size: 1.1rem;
+    align-items: center;
+}
+.label-and-edit-button button{
+    font-size: 1.1rem;
+}
+.full-name-group{
+    display: flex;
+    justify-content: space-between;
+}
+.first-name-group, .last-name-group{
+    width: 48%;
+}
+
+.side-panel .input-group{
+    padding: 0%;
+}
+.name-group, .probation-group, .met-group, .mentor-group, .capstone-group, .elective-group, .city-and-cohort-group{
+    padding-top: 16px;
+}
+.side-panel-footer{
+    display: flex;
+    margin: auto;
+    justify-content: space-between;
+    /* padding-top: 5%; */
+}
+.edit-capstone-group{
+    display: flex;
+}
+
+.student-notes-panel{
+    height: 90%;
+    /* display: flex; */
+    position: relative;
+}
+.note-container{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background-color: white;
+    padding: 4%;
+    font-size: 1.5rem;
+    border-radius: 10px;
+    margin-bottom: 5%;
+}
+.note-title-container{
+    display: flex;
+    align-items: center;
+    width: 80%;
+}
+.note-title{
+    /* width: 100%; */
+}
+.bi-pencil-square{
+    margin-right: 4%;
+}
+.add-note-button{
+    background-color: rgb(217, 217, 217);
+    margin-bottom: 5%;
+}
+.note-details-container{
+    /* display: flex; */
+
+}
+.note-details-title-container{
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 5%;
+}
+.note-details-content-container{
+    display: flex;
+    flex-direction: column;
+}
+
+.note-details-container label {
+    font-weight: bold;
+    font-size: 1.5rem;
+}
+.note-details-footer{
+    display: flex;
+    justify-content: space-between;
+    padding-top: 5%;
+}
+
+.notes-panel.btn:hover, .details-panel.btn:hover {
+    background-color:white;
+}
+
+#add-new-participant:disabled{
+    border: none;
+}
+
+.note-details-footer, .side-panel-footer{
+    position: absolute;
+    bottom: 2%;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+
+}
+.student-details-panel{
+    position: relative;
+    height: 85%;
+}
+
+.student-attendance-panel{
+    height: 85%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+.view-attendance-panel{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+}
+.main-attendance-content{
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 5%;
+}
+.absenses-view, .tardies-view{
+    width: 100%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding-bottom: 5%;
+}
+.attendance-title-and-add-button{
+    display: flex;
+    align-items: center;
+    width: 100%;
+    justify-content:space-between;
+    font-size: 1.4rem;
+}
+.attendance-summary{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+}
+.total-container, .excused-container, .unexcused-container{
+    display: flex;
+    width: 100%;
+    margin: auto;
+    justify-content: space-between;
+}
+.table-header, .table-body{
+    width: 100%;
+}
+.attendance-table{
+    width: 100%;
+    margin: auto;
+}
+.edit-attendance-panel{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.edit-panel-title{
+    font-size: 2rem;
+}
+.new-date-container{
+    width: 100%;
+}
+.date-tool{
+    width: 100%;
+}
+.new-date-title, .new-reason-title{
+    font-size: 1.6rem;
+}
+.edit-panel-title, .new-date-container, .new-reason-container{
+    padding-bottom: 16px;
+}
+
+.new-reason-input-group{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+.new-reason-input-group label{
+    font-size: 1.2rem;
+}
+#excused-input-group, #unexcused-input-group{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+.attendance-footer{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+}
+.attendance-title{
+    font-weight: bold;
+    font-size: 1.8rem;
+}
+.add-scoll{
+    overflow: scroll;
+    height: 100px;
+}
+.table-body{
+    height: 150px;
+    overflow-y: scroll;
+}
+.table-body tbody{
+    display: table-row-group;
+}
+.table-header table{
+    margin-bottom: 0;
+}
+.table-header th{
+    width: 50%;
+    padding-right: 0%;
+}
+.table-header th:nth-of-type(2){
+    padding-left: 0%;
+
+}
+.add-absense-btn, .add-tardy-btn{
+    border: solid 1px black;
+    font-size: 1rem;
+}
+.add-absense-btn:hover, .add-tardy-btn:hover{
+    background-color: rgba(40, 167, 69, 0.5);
+}
+.close-attendance-btn{
+    border: solid black 1px;
+    width: 100%;
+}
+.close-attendance-btn:hover{
+    background-color: rgba(220, 53, 69,0.8);
+    color: white;
+}
+.attendance-footer{
+    position: relative;
+    bottom: 0;
+    margin: auto;
+    width: 110%;
+    left: -5%;
+}
+.attendance-title-and-add-button, .attendance-summary, .attendance-table{
+    margin-bottom: 16px;
+}
+
+.edit-attendance-panel .attendance-footer{
+    margin: 0 1%;
+
+    width: 108%;
+    bottom: 2%;
+}

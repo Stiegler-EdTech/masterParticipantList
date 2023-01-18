@@ -1,11 +1,11 @@
 // Imports of the classes and functions
-import { Student } from "../model/Student.js"
-import { renderNewStudent } from "./student-controller.js";
-import { getAllFilters } from "./filters.js";
-import { showCheckboxes } from "../controller/checkboxes.js";
-import { toggleAll } from "../controller/toggle.js";
-import {showNewParticipantPopUp, hideNewParticipantPopUp} from "./new-participant-popup"
-import { closeSidePanel } from "../controller/side-panel/exit-button.js";
+import { Student } from '../model/Student.js';
+import { renderNewStudent } from './student-controller.js';
+import { getAllFilters } from './filters.js';
+import { showCheckboxes } from '../controller/checkboxes.js';
+import { toggleAll } from '../controller/toggle.js';
+import {showNewParticipantPopUp, hideNewParticipantPopUp} from './new-participant-popup.js'
+import { closeSidePanel } from '../controller/side-panel/exit-button.js';
 
 
 

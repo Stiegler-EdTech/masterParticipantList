@@ -1,4 +1,4 @@
-import { getAllFilters } from "../view/filters";
+import { getAllFilters } from '../view/filters.js';
 
 function resetCheckboxes(){
 	let filters = getAllFilters()

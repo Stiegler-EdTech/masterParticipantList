@@ -1,6 +1,6 @@
-import { getVisibleDOMStudents } from "../view/view"
-import { getAllMatches } from "./matching/get-all-matches"
-import { getAllFilters } from "../view/filters"
+import { getVisibleDOMStudents } from '../view/view.js'
+import { getAllMatches } from './matching/get-all-matches.js'
+import { getAllFilters } from '../view/filters.js'
 
 
 export function toggleAll(students){

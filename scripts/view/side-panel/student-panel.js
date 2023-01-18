@@ -1,5 +1,5 @@
-import { renderDetailsPanel } from "./details/student-details-panel"
-import { renderDetailsFooter } from "./details/student-details-panel"
+import { renderDetailsPanel } from './details/student-details-panel.js'
+import { renderDetailsFooter } from './details/student-details-panel.js'
 
 function renderSidePanelBox(){
     let bodyContainer = document.querySelector(".body-container")

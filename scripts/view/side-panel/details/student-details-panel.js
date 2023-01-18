@@ -1,11 +1,11 @@
-import { renderIdentifierGroup } from "./identifiers"
-import { renderNameGroup } from "./fullName"
-import { renderProbationGroup } from "./probation"
-import { renderMetGroup } from "./met"
-import { renderMentorGroup } from "./mentor"
-import { renderCapstoneGroup } from "./capstone"
-import { renderElectiveGroup } from "./elective"
-import { renderCityAndCohortGroup } from "./city-and-cohort"
+import { renderIdentifierGroup } from './identifiers.js'
+import { renderNameGroup } from './fullName.js'
+import { renderProbationGroup } from './probation.js'
+import { renderMetGroup } from './met.js'
+import { renderMentorGroup } from './mentor.js'
+import { renderCapstoneGroup } from './capstone.js'
+import { renderElectiveGroup } from './elective.js'
+import { renderCityAndCohortGroup } from './city-and-cohort.js'
 
 
 export function renderDetailsFooter(){

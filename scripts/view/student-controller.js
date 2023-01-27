@@ -6,6 +6,7 @@ import { removeSidePanel } from "../controller/side-panel/remove-side-panel.js";
 import { Student } from "../model/Student.js";
 import { renderDetailsPanel } from "./side-panel/details/student-details-panel.js";
 import { renderAddNoteButton, renderNoteContainer, renderNoteDetailsContainer, renderNotesPanel, renderNotesPreview } from "./side-panel/notes/student-notes-panel.js";
+import { renderStudentAttendance, renderAttendanceTableRow, renderEditPanel } from './side-panel/attendance/student-attendance.js';
 
 
 function renderStudentRow() {
@@ -86,6 +87,25 @@ export function renderNewStudent(student) {
 	function showMetStatusOnForm(sidePanel){
 		sidePanel.querySelector("#met").value = student.getHasMetWithStaff()
 	}
+	function resetActivePanelButton(oldButtonsArr, newButton){
+		oldButtonsArr.map(oldButton => {
+			oldButton.classList.remove("active-panel")
+			oldButton.disabled = false;
+		})
+		newButton.classList.add("active-panel")
+		newButton.disabled = true;
+		return newButton
+	}
+	function displayActivePanel(activePanel){
+		let panels = Array.from(document.querySelector(".side-panel-container").childNodes)
+		panels.map(panel => {
+			if(panel.className !== "panels"){
+				panel.style.display = "none"
+			}
+		})
+		activePanel.style.display = "block"
+		return activePanel;
+	}
 
 	newRow.addEventListener("click", (e) => {
 		if(document.querySelector(".side-panel")){
@@ -116,6 +136,10 @@ export function renderNewStudent(student) {
 			let detailsPanelButton = document.querySelector(".details-panel.btn")
 			let notesPanelButton = document.querySelector(".notes-panel.btn")
 			let editingNote;
+
+			let attendancePanelButton = document.querySelector(".attendance-panel")
+			let attendancePanel = renderStudentAttendance()
+			attendancePanel.style.display = "none"
 
 			if(student.getMentor()){
 				sidePanel.querySelector("#mentor").value = student.getMentor()
@@ -277,13 +301,8 @@ export function renderNewStudent(student) {
 			})
 
 			notesButton.addEventListener("click", (e) => {
-				detailsPanelButton.disabled = false;
-				notesButton.disabled = true;
-				detailsPanel.style.display = "none"
-				detailsPanelButton.className = ""
-				detailsPanelButton.classList.add("details-panel")
-				detailsPanelButton.classList.add("btn")
-				notesPanelButton.classList.add("active-panel")
+				displayActivePanel(notesPanel)
+				resetActivePanelButton([detailsPanelButton, attendancePanelButton], notesPanelButton)
 				sidePanel.appendChild(notesPanel)
 				notesPanel.appendChild(notesPreview)
 				notesPreview.appendChild(addNoteButton)
@@ -356,19 +375,29 @@ export function renderNewStudent(student) {
 				})
 			})
 			detailsPanelButton.addEventListener("click", (e) => {
-				detailsPanelButton.disabled = true;
-				notesButton.disabled = false;
-				detailsPanel.style.display = "block"
-				notesPanelButton.className = ""
-				notesPanelButton.classList.add("notes-panel")
-				notesPanelButton.classList.add("btn")
-				detailsPanelButton.classList.add("active-panel")
+				displayActivePanel(detailsPanel)
+				resetActivePanelButton([notesPanelButton, attendancePanelButton], detailsPanelButton)
 				notesPreview.innerHTML = ""
 				notesPanel.innerHTML = ""
 				sidePanel.removeChild(notesPanel)
 				if(document.querySelector(".side-panel-container").childElementCount>2){
 					document.querySelector(".side-panel-container").removeChild(noteDetailsContainer)
 				}
+			})
+			attendancePanelButton.addEventListener("click", (e) => {
+				displayActivePanel(attendancePanel)
+				resetActivePanelButton([notesPanelButton, detailsPanelButton], attendancePanelButton)
+				//if a student has an absene use renderAttendaceTableRow to show the record
+				attendancePanel.addEventListener("click", (e) => {
+					if(Array.from(e.target.classList).includes("add-absense-btn")){
+						console.log("add absense")
+						renderEditPanel("absense", "Absense")
+					} else if(Array.from(e.target.classList).includes("add-tardy-btn")){
+						console.log("add tardy")
+					}
+				})
+
+
 			})
 		}
 	})

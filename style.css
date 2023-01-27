@@ -176,9 +176,13 @@
     font-size: 1.4rem;
 }
 .active-panel{
-    background-color: white;
     border: solid 1px black;
+    background-color: white;
     font-weight: 500;
+}
+.active-panel:disabled{
+    background-color: white;
+    opacity: 100%;
 }
 .identifier-group, .city-and-cohort-group{
     display: flex;
@@ -460,7 +464,11 @@
 
 .edit-attendance-panel .attendance-footer{
     margin: 0 1%;
-
     width: 108%;
     bottom: 2%;
+}
+
+.bi-caret-right-fill:hover{
+    cursor: pointer;
+    font-size: larger;
 }

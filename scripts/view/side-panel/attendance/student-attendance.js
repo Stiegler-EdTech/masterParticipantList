@@ -1,14 +1,7 @@
 function makeElement(el, arr){
     let element = document.createElement(el)
-    arr.map(cl => el.classList.add(cl))
+    arr.map(cl => element.classList.add(cl))
     return element
-}
-function renderAttendancePanelButton(){
-    let panels = document.querySelector("panels")
-    let attendancePanelButton = makeElement("button", ["attendance-panel", "btn"])
-    attendancePanelButton.textContent = "Attendance"
-    panels.appendChild(attendancePanelButton)
-    return attendancePanelButton
 }
 function renderAttendancePanel(){
     let sidePanel = document.querySelector(".side-panel-container")
@@ -17,67 +10,37 @@ function renderAttendancePanel(){
     return attendancePanel
 }
 function renderViewPanel(){
-    // let viewPanel = document.createElement("div")
-    // let viewPanel = makeElement("div", ["view-attendance-panel"])
-    // viewPanel.classList.add("view-attendance-panel")
-    // return viewPanel
     return makeElement("div", ["view-attendance-panel"])
 }
 function renderViewMainContent(){
-    // let mainContent = document.createElement("div")
-    // let mainContent = makeElement("div", ["main-attendance-content"])
-    // mainContent.classList.add("main-attendance-content")
-    // return mainContent
     return makeElement("div", ["main-attendance-content"])
 }
 function renderAbsenseView(){
-    // let absensesView = document.createElement("div")
-    // let absensesView = makeElement("div", ["absenses-view"])
-    // absensesView.classList.add("absenses-view")
-    // return absensesView
     return makeElement("div", ["absenses-view"])
 }
 function renderTardiesView(){
     return makeElement("div", ["tardies-view"])
 }
 function renderTitleAndAddButtonContainer(){
-    // let titleAndAddButtonContainer = makeElement("div", ["attendance-title-and-add-button"])
-    // let titleAndAddButtonContainer = document.createElement("div")
-    // titleAndAddButtonContainer.classList.add("attendance-title-and-add-button")
-    // return titleAndAddButtonContainer
     return makeElement("div", ["attendance-title-and-add-button"])
 }
 function renderAttendanceTitle(titleName){
     let title = makeElement("div", ["attendance-title"])
-    // let title = document.createElement("div")
-    // title.classList.add("attendance-title")
     title.textContent = titleName
     return title;
 }
 function renderAddAtendanceButton(buttonText, buttonClass){
-    button = makeElement("button", [`add-${buttonClass}-btn`, "btn", "btn-md"])
-    // button = document.createElement("button")
-    // button.classList.add(`add-${buttonClass}-btn`)
-    // button.classList.add("btn")
-    // button.classList.add("btn-md")
+    let button = makeElement("button", [`add-${buttonClass}-btn`, "btn", "btn-md"])
     button.textContent = `+ Add ${buttonText}`
     return button
 }
 function renderAttendanceSummaryContainer(){
-    // let attendanceSummary = document.createElement("div")
-    // attendanceSummary.classList.add("attendance-summary")
-    // return attendanceSummary
     return makeElement("div", ["attendance-summary"])
 }
 function renderTotalContainer(){
-    // let totalContainer = document.createElement("div")
-    // totalContainer.classList.add("total-container")
-    // return totalContainer
     return makeElement("div", ["total-container"])
 }
 function renderTotalTitle(){
-    // let totalTitle = document.createElement("div")
-    // totalTitle.classList.add("total-title")
     let totalTitle = makeElement("div", ["total-title"])
     totalTitle.textContent = "Total"
     return totalTitle
@@ -87,29 +50,20 @@ function renderTotalNumber(){
     number.textContent = 0;
     return number
 }
-function renderExcusedContainer(){
-    return makeElement("div", ["excused-container"])
+function renderExcusedOrUnexcusedContainer(type){
+    return makeElement("div", [`${type}-container`])
 }
-function renderExcusedTitle(){
-    let title = makeElement("div", ["excused-title"])
-    title.textContent = "Excused"
+function renderExcusedOrUnexcusedTitle(type, typeUpper){
+    let title = makeElement("div", [`${type}-title`])
+    title.textContent = typeUpper
     return title
 }
-function renderExcusedNumber(){
-    let number = makeElement("div", ["excused-number"])
+function renderExcusedOrUnexcusedNumber(type){
+    let number = makeElement("div", [`${type}-number`])
     number.textContent =0
     return number
 }
-function renderUnexcusedTitle(){
-    let title = makeElement("div", ["unexcused-title"])
-    title.textContent = "Excused"
-    return title
-}
-function renderUnexcusedNumber(){
-    let number = makeElement("div", ["unexcused-number"])
-    number.textContent = 0
-    return number
-}
+
 function renderAttendanceTable(){
     return makeElement("div", ["attendance-table", "table"])
 }
@@ -137,6 +91,13 @@ function renderTableBody(){
     table.appendChild(tbody)
     return tbody
 }
+export function renderAttendanceTableRow(date, reason){
+    let tr = makeElement("tr", [])
+    let dateTd = makeElement("td", [])
+    dateTd.textContent = date
+    let reasonTd = makeElement("td", [])
+    reasonTd.textContent = reason
+}
 function renderFooter(){
     return makeElement("div", ["attendance-footer"])
 }
@@ -146,81 +107,157 @@ function renderCloseViewButton(){
     return button
 }
 
-function renderAbsensesSection(){
-
+function putTogetherAttendanceAndTitleButton(view, capital, lowercase, pluralCap){
+    let titleAndAddButtonContainer = renderTitleAndAddButtonContainer()
+    view.appendChild(titleAndAddButtonContainer)
+    let title = renderAttendanceTitle(pluralCap)
+    let addButton = renderAddAtendanceButton(capital, lowercase)
+    titleAndAddButtonContainer.appendChild(title)
+    titleAndAddButtonContainer.appendChild(addButton)
+    return titleAndAddButtonContainer
 }
 
-function renderStudentAttendance(){
-    let attendancePanelButton = renderAttendancePanelButton()
-    let panel = renderAttendancePanel()
-    let viewPanel = renderViewPanel()
-    panel.appendChild(viewPanel)
-    //remember to append the edit panel here
-
-    let viewMainContent = renderViewMainContent()
-    viewPanel.appendChild(viewMainContent)
-
-    let absensesView = renderAbsenseView()
-    let tardiesView = renderTardiesView()
-    viewMainContent.appendChild(absensesView)
-
-    let titleAndAddButtonContainer = renderTitleAndAddButtonContainer()
-    absensesView.appendChild(titleAndAddButtonContainer)
-
-    let attendanceTitle = renderAttendanceTitle("Absenses")
-    let addAttendanceButton = renderAddAtendanceButton("Absense", "absense")
-    titleAndAddButtonContainer.appendChild(attendanceTitle)
-    titleAndAddButtonContainer.appendChild(addAttendanceButton)
-
+function renderSummary(view){
     let summary = renderAttendanceSummaryContainer()
     let totalContainer = renderTotalContainer()
     let totalTitle = renderTotalTitle()
     let totalNumber = renderTotalNumber()
-    absensesView.appendChild(summary)
+    view.appendChild(summary)
     summary.appendChild(totalContainer)
     totalContainer.appendChild(totalTitle)
     totalContainer.appendChild(totalNumber)
+    return summary
+}
 
-    let excusedContainer = renderExcusedContainer()
-    let exucsedTitle = renderExcusedTitle()
-    let excusedNumber = renderExcusedNumber()
-    summary.appendChild(excusedContainer)
-    excusedContainer.appendChild(exucsedTitle)
-    excusedContainer.appendChild(excusedNumber)
+function buildExcusedOrUnexcused(summary, type, typeUpper){
+    let container = renderExcusedOrUnexcusedContainer(type)
+    let title = renderExcusedOrUnexcusedTitle(type, typeUpper)
+    let number = renderExcusedOrUnexcusedNumber(type)
+    summary.appendChild(container)
+    container.appendChild(title)
+    container.appendChild(number)
+}
 
-    let unexcusedContainer = renderUnexcusedContainer()
-    let unexucsedTitle = renderUnexcusedTitle()
-    let unexcusedNumber = renderUnexcusedNumber()
-    summary.appendChild(unexcusedContainer)
-    unexcusedContainer.appendChild(unexucsedTitle)
-    unexcusedContainer.appendChild(unexcusedNumber)
-
+function buildTable(view){
     let table = renderAttendanceTable()
     let theaderContainer = renderTableHeaderContainer()
     let theader = renderTableHeader()
     let dateHeader = renderTH("Date")
     let reasonHeader = renderTH("Reason")
-    absensesView.appendChild(table)
+    view.appendChild(table)
     table.appendChild(theaderContainer)
     theaderContainer.appendChild(theader)
     theader.appendChild(dateHeader)
     theader.appendChild(reasonHeader)
-
     let tbodyContainer = renderTableBodyContainer()
     let tbody = renderTableBody()
     table.appendChild(tbodyContainer)
     tbodyContainer.appendChild(tbody)
+    return table
+}
 
+function renderAbsenseSection(){
+    let absensesView = renderAbsenseView()
+    putTogetherAttendanceAndTitleButton(absensesView, "Absense", "absense", "Absenses")
+    let summary = renderSummary(absensesView)
+    buildExcusedOrUnexcused(summary, "excused", "Excused")
+    buildExcusedOrUnexcused(summary, "unexcused", "Unexcused")
+    buildTable(absensesView)
+    return absensesView
+}
+
+function renderTardySection(){
+    let tardiesView = renderTardiesView()
+    putTogetherAttendanceAndTitleButton(tardiesView, "Tardy", "tardy", "Tardies")
+    let summary = renderSummary(tardiesView)
+    buildExcusedOrUnexcused(summary, "excused", "Excused")
+    buildExcusedOrUnexcused(summary, "unexcused", "Unexcused")
+    buildTable(tardiesView)
+    return tardiesView
+}
+
+export function renderStudentAttendance(){
+    let panel = renderAttendancePanel()
+    let viewPanel = renderViewPanel()
+    panel.appendChild(viewPanel)
+    let viewMainContent = renderViewMainContent()
+    viewPanel.appendChild(viewMainContent)
+    let absensesView = renderAbsenseSection()
+    let tardiesView = renderTardySection()
+    viewMainContent.appendChild(absensesView)
     viewMainContent.appendChild(tardiesView)
-
     let footer = renderFooter()
     viewPanel.appendChild(footer)
 
+    return panel
+}
 
+
+
+export function renderEditPanel(type, typeUpper){
+    let panel = document.querySelector(".student-attendance-panel")
+    let editPanel = makeElement("div", ["edit-attendance-panel"])
+    panel.appendChild(editPanel)
+
+    let mainContent = makeElement("div", ["main-attendance-content"])
+    panel.appendChild(mainContent)
+
+    let panelTitle = makeElement("div", ["edit-panel-title"])
+    panelTitle.textContent = `New ${typeUpper}`
+    mainContent.appendChild(panelTitle)
+
+    let newDateContainer = makeElement("div", ["new-date-container"])
+    mainContent.appendChild(newDateContainer)
+
+    let newDateTitle = makeElement("div", ["new-date-title"])
+    newDateTitle.textContent = "Date"
+    newDateContainer.appendChild(newDateTitle)
+
+    let dateTool = makeElement("div", ["date-tool"])
+    dateTool.textContent = "Some date picker tool"
+    newDateContainer.appendChild(dateTool)
+
+    let newReasonContainer = makeElement("div", ["new-reason-container"])
+    mainContent.appendChild(newReasonContainer)
+
+    let newReasonTitle = makeElement("div", ["new-reason-title"])
+    newReasonTitle.textContent = "Reason"
+    newReasonContainer.appendChild(newReasonTitle)
+
+    let newReasonInputGroup = makeElement("div", ["new-reason-input-group", "input-group"])
+    newReasonContainer.appendChild(newReasonInputGroup)
+
+    let excusedInputGroup = makeElement("div", ["excused-input-group"])
+    newReasonInputGroup.appendChild(excusedInputGroup)
+
+    let excusedLabel = makeElement("label", ["radio"])
+    excusedLabel.htmlFor = "excused"
+    excusedLabel.textContent = "Excused"
+    excusedInputGroup.appendChild(excusedLabel)
+
+    let excusedInput = makeElement("input", ["radio"])
+    excusedInput.setAttribute("type", "radio")
+    excusedInput.id = "excused"
+    excusedInput.setAttribute("name", "reason")
+    excusedInput.value = "excused"
+    excusedInputGroup.appendChild(excusedInput)
+
+  //do the same thing above for unexcused dynamically
+
+
+
+    let editFooter = makeElement("div", ["attendance-footer"])
+    panel.appendChild(editFooter)
+
+    let cancelButton = makeElement("button", ["btn", "btn-danger", "cancel-attendance-btn"])
+    cancelButton.textContent = "Cancel"
+    editFooter.appendChild(cancelButton)
+
+    let saveButton = makeElement("button", ["btn", "btn-success", "save-attendance-btn"])
+    saveButton.textContent = "Save"
+    editFooter.appendChild(saveButton)
 
 
 
 
 }
-
-

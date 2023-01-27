@@ -28,8 +28,13 @@ function renderPanelButtons(){
     notesButton.classList.add("notes-panel")
     notesButton.classList.add("btn")
     notesButton.textContent = "Notes"
+    let attendanceButton = document.createElement("button")
+    attendanceButton.classList.add("attendance-panel")
+    attendanceButton.classList.add("btn")
+    attendanceButton.textContent = "Attendance"
     panels.appendChild(detailsButton)
     panels.appendChild(notesButton)
+    panels.appendChild(attendanceButton)
     return panels
 }
 

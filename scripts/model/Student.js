@@ -39,20 +39,32 @@ export class Student {
 	getId(){
 		return this.id
 	}
-	addAbsense(date, reason) {
-		let newAbsense = new Absense(date, reason, this);
+	addAbsense(date, isExcused) {
+		let newAbsense = new Absense(date, isExcused, this);
 		this.absenses.push(newAbsense);
-		newAbsense.id = this.absenses.length;
+		// newAbsense.id = this.absenses.length;
 		absenses.push(newAbsense);
 		return this.absenses;
 	}
 	getAbsenses() {
 		return this.absenses;
 	}
-	addTardy(date, reason) {
-		let newTardy = new Tardy(date, reason, this);
+	getExcusedAbsenses(){
+		return this.absenses.filter(ab => ab.isExcused)
+	}
+	getUnexcusedAbsenses(){
+		return this.absenses.filter(ab => !ab.isExcused)
+	}
+	getExcusedTardies(){
+		return this.tardies.filter(tar => tar.isExcused)
+	}
+	getUnexcusedTardies(){
+		return this.tardies.filter(tar => !tar.isExcused)
+	}
+	addTardy(date, isExcused) {
+		let newTardy = new Tardy(date, isExcused, this);
 		this.tardies.push(newTardy);
-		newTardy.id = this.tardies.length;
+		// newTardy.id = this.tardies.length;
 		tardies.push(newTardy);
 		return this.tardies;
 	}

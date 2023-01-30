@@ -192,7 +192,22 @@ export function renderStudentAttendance(){
     return panel
 }
 
+function buildNewReason(parent, lower, upper){
+    let inputGroup = makeElement("div", [`${lower}-input-group`])
+    parent.appendChild(inputGroup)
 
+    let label = makeElement("label", ["radio"])
+    label.htmlFor = lower
+    label.textContent = upper
+    inputGroup.appendChild(label)
+
+    let input = makeElement("input", ["radio"])
+    input.setAttribute("type", "radio")
+    input.id = lower
+    input.setAttribute("name", "reason")
+    input.value = lower
+    inputGroup.appendChild(input)
+}
 
 export function renderEditPanel(type, typeUpper){
     let panel = document.querySelector(".student-attendance-panel")
@@ -200,7 +215,7 @@ export function renderEditPanel(type, typeUpper){
     panel.appendChild(editPanel)
 
     let mainContent = makeElement("div", ["main-attendance-content"])
-    panel.appendChild(mainContent)
+    editPanel.appendChild(mainContent)
 
     let panelTitle = makeElement("div", ["edit-panel-title"])
     panelTitle.textContent = `New ${typeUpper}`
@@ -213,8 +228,8 @@ export function renderEditPanel(type, typeUpper){
     newDateTitle.textContent = "Date"
     newDateContainer.appendChild(newDateTitle)
 
-    let dateTool = makeElement("div", ["date-tool"])
-    dateTool.textContent = "Some date picker tool"
+    let dateTool = makeElement("input", ["date-tool"])
+    dateTool.type = "date"
     newDateContainer.appendChild(dateTool)
 
     let newReasonContainer = makeElement("div", ["new-reason-container"])
@@ -227,27 +242,12 @@ export function renderEditPanel(type, typeUpper){
     let newReasonInputGroup = makeElement("div", ["new-reason-input-group", "input-group"])
     newReasonContainer.appendChild(newReasonInputGroup)
 
-    let excusedInputGroup = makeElement("div", ["excused-input-group"])
-    newReasonInputGroup.appendChild(excusedInputGroup)
-
-    let excusedLabel = makeElement("label", ["radio"])
-    excusedLabel.htmlFor = "excused"
-    excusedLabel.textContent = "Excused"
-    excusedInputGroup.appendChild(excusedLabel)
-
-    let excusedInput = makeElement("input", ["radio"])
-    excusedInput.setAttribute("type", "radio")
-    excusedInput.id = "excused"
-    excusedInput.setAttribute("name", "reason")
-    excusedInput.value = "excused"
-    excusedInputGroup.appendChild(excusedInput)
-
+    buildNewReason(newReasonInputGroup, "excused", "Excused")
+    buildNewReason(newReasonInputGroup, "unexcused", "Unexcused")
   //do the same thing above for unexcused dynamically
 
-
-
     let editFooter = makeElement("div", ["attendance-footer"])
-    panel.appendChild(editFooter)
+    editPanel.appendChild(editFooter)
 
     let cancelButton = makeElement("button", ["btn", "btn-danger", "cancel-attendance-btn"])
     cancelButton.textContent = "Cancel"

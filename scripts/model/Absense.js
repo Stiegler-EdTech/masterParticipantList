@@ -1,8 +1,9 @@
 export class Absense {
-	constructor(date, reason, student) {
+	constructor(date, isExcused, student) {
 		this.date = date
-		this.reason = reason;
-		this.student = student.userName;
-		this.id = student.getAbsenses();
+		this.isExcused = isExcused;
+		this.student = student;
+		this.id = student.getAbsenses().length;
 	}
+
 }

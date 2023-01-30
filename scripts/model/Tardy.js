@@ -1,8 +1,8 @@
 export class Tardy {
-	constructor(date, reason, student) {
+	constructor(date, isExcused, student) {
 		this.date = date
-		this.reason = reason;
-		this.student = student.userName;
-		this.id = student.getTardies();
+		this.isExcused = isExcused;
+		this.student = student;
+		this.id = student.getTardies().length-1;
 	}
 }

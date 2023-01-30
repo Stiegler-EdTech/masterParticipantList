@@ -106,6 +106,38 @@ export function renderNewStudent(student) {
 		activePanel.style.display = "block"
 		return activePanel;
 	}
+	function updateAbsenseView(){
+		if(student.getAbsenses().length){
+			student.getAbsenses().map(ab => {
+				document.querySelector(".absenses-view .total-number").textContent = student.getAbsenses().length
+				document.querySelector(".absenses-view .total-number").value = student.getAbsenses().length
+				document.querySelector(`#student${student.id}`).querySelector(".absenses").textContent = student.getAbsenses().length
+				if(ab.isExcused){
+					document.querySelector(".absenses-view .excused-number").textContent = student.getExcusedAbsenses().length
+					document.querySelector(".absenses-view .excused-number").value = student.getExcusedAbsenses().length
+				} else if(!ab.isExcused){
+					document.querySelector(".absenses-view .unexcused-number").textContent = student.getUnexcusedAbsenses().length
+					document.querySelector(".absenses-view .unexcused-number").value = student.getUnexcusedAbsenses().length
+				}
+			})
+		}
+	}
+	function updateTardyView(){
+		if(student.getTardies().length){
+			student.getTardies().map(tar => {
+				document.querySelector(".tardies-view .total-number").textContent = student.getTardies().length
+				document.querySelector(".tardies-view .total-number").value = student.getTardies().length
+				document.querySelector(`#student${student.id}`).querySelector(".tardies").textContent = student.getTardies().length
+				if(tar.isExcused){
+					document.querySelector(".tardies-view .excused-number").textContent = student.getExcusedTardies().length
+					document.querySelector(".tardies-view .excused-number").value = student.getExcusedTardies().length
+				} else if(!tar.isExcused){
+					document.querySelector(".tardies-view .unexcused-number").textContent = student.getUnexcusedTardies().length
+					document.querySelector(".tardies-view .unexcused-number").value = student.getUnexcusedTardies().length
+				}
+			})
+		}
+	}
 
 	newRow.addEventListener("click", (e) => {
 		if(document.querySelector(".side-panel")){
@@ -388,12 +420,42 @@ export function renderNewStudent(student) {
 				displayActivePanel(attendancePanel)
 				resetActivePanelButton([notesPanelButton, detailsPanelButton], attendancePanelButton)
 				//if a student has an absene use renderAttendaceTableRow to show the record
+				updateAbsenseView()
+				updateTardyView()
 				attendancePanel.addEventListener("click", (e) => {
+					let viewPanel = document.querySelector(".view-attendance-panel")
+					let editPanel = document.querySelector(".edit-attendance-panel")
 					if(Array.from(e.target.classList).includes("add-absense-btn")){
-						console.log("add absense")
+						viewPanel.style.display = "none"
 						renderEditPanel("absense", "Absense")
 					} else if(Array.from(e.target.classList).includes("add-tardy-btn")){
-						console.log("add tardy")
+						viewPanel.style.display = "none"
+						renderEditPanel("tardy", "Tardy")
+					}
+					else if(Array.from(e.target.classList).includes("cancel-attendance-btn")){
+						editPanel.parentElement.removeChild(editPanel)
+						viewPanel.style.display = "block"
+					}else if(Array.from(e.target.classList).includes("save-attendance-btn")){
+						let selectedDate = document.querySelector(".date-tool").value
+						let reason = document.querySelector('input[name="reason"]:checked').value
+						let isExcused;
+						if(reason === "excused"){
+							isExcused = true;
+						} else if(reason === "unexcused"){
+							isExcused = false;
+						}
+						let currentlyEditing = document.querySelector(".edit-panel-title").textContent
+						if(currentlyEditing === "New Absense"){
+							student.addAbsense(selectedDate, isExcused)
+							updateAbsenseView()
+						} else if(currentlyEditing === "New Tardy"){
+							student.addTardy(selectedDate, isExcused)
+							updateTardyView()
+						}
+
+						editPanel.parentElement.removeChild(editPanel)
+						viewPanel.style.display = "block"
+
 					}
 				})
 

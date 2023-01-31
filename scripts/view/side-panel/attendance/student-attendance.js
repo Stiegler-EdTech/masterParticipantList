@@ -70,11 +70,13 @@ function renderAttendanceTable(){
 function renderTableHeaderContainer(){
     return makeElement("div", ["table-header"])
 }
+function renderTableHeaderTable(){
+    return makeElement("table", ["table"])
+}
 function renderTableHeader(){
-    let table = makeElement("table", ["table"])
-    let head = makeElement("thead", [])
-    table.appendChild(head)
-    return head
+    return  makeElement("thead", [])
+    // table.appendChild(head)
+    // return table
 }
 function renderTH(text){
     let th = makeElement("th", [])
@@ -89,7 +91,7 @@ function renderTableBody(){
     let table = makeElement("table", ["table", "table-striped"])
     let tbody = makeElement("tbody", [])
     table.appendChild(tbody)
-    return tbody
+    return table
 }
 export function renderAttendanceTableRow(date, reason){
     let tr = makeElement("tr", [])
@@ -97,6 +99,9 @@ export function renderAttendanceTableRow(date, reason){
     dateTd.textContent = date
     let reasonTd = makeElement("td", [])
     reasonTd.textContent = reason
+    tr.appendChild(dateTd)
+    tr.appendChild(reasonTd)
+    return tr;
 }
 function renderFooter(){
     return makeElement("div", ["attendance-footer"])
@@ -141,12 +146,14 @@ function buildExcusedOrUnexcused(summary, type, typeUpper){
 function buildTable(view){
     let table = renderAttendanceTable()
     let theaderContainer = renderTableHeaderContainer()
+    let tableHeaderTable = renderTableHeaderTable()
     let theader = renderTableHeader()
     let dateHeader = renderTH("Date")
     let reasonHeader = renderTH("Reason")
     view.appendChild(table)
     table.appendChild(theaderContainer)
-    theaderContainer.appendChild(theader)
+    theaderContainer.appendChild(tableHeaderTable)
+    tableHeaderTable.appendChild(theader)
     theader.appendChild(dateHeader)
     theader.appendChild(reasonHeader)
     let tbodyContainer = renderTableBodyContainer()
@@ -176,22 +183,6 @@ function renderTardySection(){
     return tardiesView
 }
 
-export function renderStudentAttendance(){
-    let panel = renderAttendancePanel()
-    let viewPanel = renderViewPanel()
-    panel.appendChild(viewPanel)
-    let viewMainContent = renderViewMainContent()
-    viewPanel.appendChild(viewMainContent)
-    let absensesView = renderAbsenseSection()
-    let tardiesView = renderTardySection()
-    viewMainContent.appendChild(absensesView)
-    viewMainContent.appendChild(tardiesView)
-    let footer = renderFooter()
-    viewPanel.appendChild(footer)
-
-    return panel
-}
-
 function buildNewReason(parent, lower, upper){
     let inputGroup = makeElement("div", [`${lower}-input-group`])
     parent.appendChild(inputGroup)
@@ -211,7 +202,7 @@ function buildNewReason(parent, lower, upper){
 
 export function renderEditPanel(type, typeUpper){
     let panel = document.querySelector(".student-attendance-panel")
-    let editPanel = makeElement("div", ["edit-attendance-panel"])
+    let editPanel = makeElement("div", ["edit-attendance-panel", `edit-${type}`])
     panel.appendChild(editPanel)
 
     let mainContent = makeElement("div", ["main-attendance-content"])
@@ -230,6 +221,7 @@ export function renderEditPanel(type, typeUpper){
 
     let dateTool = makeElement("input", ["date-tool"])
     dateTool.type = "date"
+    dateTool.value = new Date().toISOString().split("T")[0]
     newDateContainer.appendChild(dateTool)
 
     let newReasonContainer = makeElement("div", ["new-reason-container"])
@@ -244,7 +236,6 @@ export function renderEditPanel(type, typeUpper){
 
     buildNewReason(newReasonInputGroup, "excused", "Excused")
     buildNewReason(newReasonInputGroup, "unexcused", "Unexcused")
-  //do the same thing above for unexcused dynamically
 
     let editFooter = makeElement("div", ["attendance-footer"])
     editPanel.appendChild(editFooter)
@@ -257,7 +248,22 @@ export function renderEditPanel(type, typeUpper){
     saveButton.textContent = "Save"
     editFooter.appendChild(saveButton)
 
+    return editPanel
+}
 
-
-
+export function renderStudentAttendance(){
+    let panel = renderAttendancePanel()
+    let viewPanel = renderViewPanel()
+    panel.appendChild(viewPanel)
+    let viewMainContent = renderViewMainContent()
+    viewPanel.appendChild(viewMainContent)
+    let absensesView = renderAbsenseSection()
+    let tardiesView = renderTardySection()
+    viewMainContent.appendChild(absensesView)
+    viewMainContent.appendChild(tardiesView)
+    let footer = renderFooter()
+    viewPanel.appendChild(footer)
+    // renderEditPanel("absense", "Absense")
+    // renderEditPanel("tardy", "Tardy")
+    return panel
 }

@@ -44,6 +44,112 @@ function renderStudentTardies(student) {
 	return tardiesTd;
 }
 
+function enableInput(e, input){
+	e.target.parentElement.parentElement.querySelector(`${input}`).disabled = false
+}
+
+function showUsernameOnForm(sidePanel, student){
+	sidePanel.querySelector("#username").value = student.getUserName()
+}
+
+function showStudentIdOnForm(sidePanel, student){
+	sidePanel.querySelector("#student-id").value = student.getId()
+}
+
+function showCityOnForm(sidePanel, student){
+	sidePanel.querySelector("#city-info").value = student.getCity()[0].toUpperCase() + student.getCity().slice(1)
+}
+
+function showCohortOnForm(sidePanel, student){
+	sidePanel.querySelector("#cohort-info").value = student.getCohort()
+}
+
+function showFirstNameOnForm(sidePanel, student){
+	sidePanel.querySelector(".first-name-input").value = student.getFirstName()
+}
+
+function showLastNameOnForm(sidePanel, student){
+	sidePanel.querySelector(".last-name-input").value = student.getLastName()
+}
+
+function showProbationStatusOnForm(sidePanel, student){
+	sidePanel.querySelector("#probation").value = student.getIsOnProbation()
+}
+
+function showMetStatusOnForm(sidePanel, student){
+	sidePanel.querySelector("#met").value = student.getHasMetWithStaff()
+}
+
+function resetActivePanelButton(e){
+	let panelButtons = Array.from(document.querySelector(".panels").childNodes)
+	let currentButton = e.target.classList[0]
+	panelButtons.map(b => {
+		if(Array.from(b.classList).includes(currentButton)){
+			b.classList.add("active-panel")
+		} else{
+			b.classList.remove("active-panel")
+		}
+	})
+}
+function displayActivePanel(activePanel){
+	let panels = Array.from(document.querySelector(".side-panel-container").childNodes)
+	panels.map(panel => {
+		if(panel.className !== "panels"){
+			panel.style.display = "none"
+			// panel.parentElement.removeChild(panel)
+		}
+	})
+	activePanel.style.display = "block"
+	// activePanel.parentElement.appendChild(activePanel)
+	return activePanel;
+}
+
+function updateAbsenseView(student){
+	document.querySelector(`#student${student.id}`).querySelector(".absenses").textContent = student.getAbsenses().length
+	if(student.getAbsenses().length){
+		student.getAbsenses().map(ab => {
+			document.querySelector(".absenses-view .total-number").textContent = student.getAbsenses().length
+			document.querySelector(".absenses-view .total-number").value = student.getAbsenses().length
+			if(ab.isExcused){
+				document.querySelector(".absenses-view .excused-number").textContent = student.getExcusedAbsenses().length
+				document.querySelector(".absenses-view .excused-number").value = student.getExcusedAbsenses().length
+			} else if(!ab.isExcused){
+				document.querySelector(".absenses-view .unexcused-number").textContent = student.getUnexcusedAbsenses().length
+				document.querySelector(".absenses-view .unexcused-number").value = student.getUnexcusedAbsenses().length
+			}
+		})
+	}
+}
+
+function updateTardyView(student){
+	document.querySelector(`#student${student.id}`).querySelector(".tardies").textContent = student.getTardies().length
+	if(student.getTardies().length){
+		student.getTardies().map(tar => {
+			document.querySelector(".tardies-view .total-number").textContent = student.getTardies().length
+			document.querySelector(".tardies-view .total-number").value = student.getTardies().length
+			if(tar.isExcused){
+				document.querySelector(".tardies-view .excused-number").textContent = student.getExcusedTardies().length
+				document.querySelector(".tardies-view .excused-number").value = student.getExcusedTardies().length
+			} else if(!tar.isExcused){
+				document.querySelector(".tardies-view .unexcused-number").textContent = student.getUnexcusedTardies().length
+				document.querySelector(".tardies-view .unexcused-number").value = student.getUnexcusedTardies().length
+			}
+		})
+	}
+}
+
+function resetEditAttendanceView(){
+	let editAbsense = document.querySelector(".edit-attendance-panel.edit-absense")
+	let editTardy = document.querySelector(".edit-attendance-panel.edit-tardy")
+	let viewPanel = document.querySelector(".view-attendance-panel")
+	let reason = document.querySelector('input[name="reason"]:checked')
+
+	editAbsense? editAbsense.style.display = "none" : null
+	editTardy? editTardy.style.display = "none" : null
+	viewPanel.style.display = "block"
+	Array.from(document.querySelectorAll(".date-tool")).map(tool => tool.value = new Date().toISOString().split("T")[0])
+	reason? reason.checked = false : null
+}
 
 
 export function renderNewStudent(student) {
@@ -59,85 +165,8 @@ export function renderNewStudent(student) {
 	newRow.appendChild(absensesTd);
 	newRow.appendChild(tardiesTd);
 
-	function enableInput(e, input){
-		e.target.parentElement.parentElement.querySelector(`${input}`).disabled = false
-	}
-
-	function showUsernameOnForm(sidePanel){
-		sidePanel.querySelector("#username").value = student.getUserName()
-	}
-	function showStudentIdOnForm(sidePanel){
-		sidePanel.querySelector("#student-id").value = student.getId()
-	}
-	function showCityOnForm(sidePanel){
-		sidePanel.querySelector("#city-info").value = student.getCity()[0].toUpperCase() + student.getCity().slice(1)
-	}
-	function showCohortOnForm(sidePanel){
-		sidePanel.querySelector("#cohort-info").value = student.getCohort()
-	}
-	function showFirstNameOnForm(sidePanel){
-		sidePanel.querySelector(".first-name-input").value = student.getFirstName()
-	}
-	function showLastNameOnForm(sidePanel){
-		sidePanel.querySelector(".last-name-input").value = student.getLastName()
-	}
-	function showProbationStatusOnForm(sidePanel){
-		sidePanel.querySelector("#probation").value = student.getIsOnProbation()
-	}
-	function showMetStatusOnForm(sidePanel){
-		sidePanel.querySelector("#met").value = student.getHasMetWithStaff()
-	}
-	function resetActivePanelButton(oldButtonsArr, newButton){
-		oldButtonsArr.map(oldButton => {
-			oldButton.classList.remove("active-panel")
-			oldButton.disabled = false;
-		})
-		newButton.classList.add("active-panel")
-		newButton.disabled = true;
-		return newButton
-	}
-	function displayActivePanel(activePanel){
-		let panels = Array.from(document.querySelector(".side-panel-container").childNodes)
-		panels.map(panel => {
-			if(panel.className !== "panels"){
-				panel.style.display = "none"
-			}
-		})
-		activePanel.style.display = "block"
-		return activePanel;
-	}
-	function updateAbsenseView(){
-		if(student.getAbsenses().length){
-			student.getAbsenses().map(ab => {
-				document.querySelector(".absenses-view .total-number").textContent = student.getAbsenses().length
-				document.querySelector(".absenses-view .total-number").value = student.getAbsenses().length
-				document.querySelector(`#student${student.id}`).querySelector(".absenses").textContent = student.getAbsenses().length
-				if(ab.isExcused){
-					document.querySelector(".absenses-view .excused-number").textContent = student.getExcusedAbsenses().length
-					document.querySelector(".absenses-view .excused-number").value = student.getExcusedAbsenses().length
-				} else if(!ab.isExcused){
-					document.querySelector(".absenses-view .unexcused-number").textContent = student.getUnexcusedAbsenses().length
-					document.querySelector(".absenses-view .unexcused-number").value = student.getUnexcusedAbsenses().length
-				}
-			})
-		}
-	}
-	function updateTardyView(){
-		if(student.getTardies().length){
-			student.getTardies().map(tar => {
-				document.querySelector(".tardies-view .total-number").textContent = student.getTardies().length
-				document.querySelector(".tardies-view .total-number").value = student.getTardies().length
-				document.querySelector(`#student${student.id}`).querySelector(".tardies").textContent = student.getTardies().length
-				if(tar.isExcused){
-					document.querySelector(".tardies-view .excused-number").textContent = student.getExcusedTardies().length
-					document.querySelector(".tardies-view .excused-number").value = student.getExcusedTardies().length
-				} else if(!tar.isExcused){
-					document.querySelector(".tardies-view .unexcused-number").textContent = student.getUnexcusedTardies().length
-					document.querySelector(".tardies-view .unexcused-number").value = student.getUnexcusedTardies().length
-				}
-			})
-		}
-	}
+	updateAbsenseView(student)
+	updateTardyView(student)
 
 	newRow.addEventListener("click", (e) => {
 		if(document.querySelector(".side-panel")){
@@ -151,14 +180,14 @@ export function renderNewStudent(student) {
 			let sidePanel = renderSidePanel()
 			let detailsPanel = renderDetailsPanel()
 			sidePanel.appendChild(detailsPanel)
-			showUsernameOnForm(sidePanel)
-			showStudentIdOnForm(sidePanel)
-			showCityOnForm(sidePanel)
-			showCohortOnForm(sidePanel)
-			showFirstNameOnForm(sidePanel)
-			showLastNameOnForm(sidePanel)
-			showProbationStatusOnForm(sidePanel)
-			showMetStatusOnForm(sidePanel)
+			showUsernameOnForm(sidePanel, student)
+			showStudentIdOnForm(sidePanel, student)
+			showCityOnForm(sidePanel, student)
+			showCohortOnForm(sidePanel, student)
+			showFirstNameOnForm(sidePanel, student)
+			showLastNameOnForm(sidePanel, student)
+			showProbationStatusOnForm(sidePanel, student)
+			showMetStatusOnForm(sidePanel, student)
 
 			let notesButton = document.querySelector(".notes-panel")
 			let notesPanel = renderNotesPanel()
@@ -172,6 +201,14 @@ export function renderNewStudent(student) {
 			let attendancePanelButton = document.querySelector(".attendance-panel")
 			let attendancePanel = renderStudentAttendance()
 			attendancePanel.style.display = "none"
+
+			let viewPanel = document.querySelector(".view-attendance-panel")
+
+			let editAbsense = renderEditPanel("absense", "Absense")
+			editAbsense.style.display = "none"
+
+    		let editTardy = renderEditPanel("tardy", "Tardy")
+			editTardy.style.display = "none"
 
 			if(student.getMentor()){
 				sidePanel.querySelector("#mentor").value = student.getMentor()
@@ -321,9 +358,6 @@ export function renderNewStudent(student) {
 						let match = Array.from(document.querySelectorAll(".participant-list tr")).filter(s => parseInt(s.id.slice(-1)) == student.getId())
 						match[0].querySelector(".name").textContent = student.getFullName()
 					}
-					// if(Array.from(document.querySelector(".notes-panel.btn").classList).includes("active-panel")){
-					// 	student.addNote(noteTitle, noteContent)
-					// }
 					removeSidePanel()
 				} else if(Array.from(e.target.classList).includes("btn-danger")){
 					removeSidePanel()
@@ -334,7 +368,11 @@ export function renderNewStudent(student) {
 
 			notesButton.addEventListener("click", (e) => {
 				displayActivePanel(notesPanel)
-				resetActivePanelButton([detailsPanelButton, attendancePanelButton], notesPanelButton)
+				resetActivePanelButton(e)
+				attendancePanel.style.display = "none"
+				editAbsense.style.display = "none"
+				editTardy.style.display = "none"
+				viewPanel.style.display = "none"
 				sidePanel.appendChild(notesPanel)
 				notesPanel.appendChild(notesPreview)
 				notesPreview.appendChild(addNoteButton)
@@ -408,54 +446,90 @@ export function renderNewStudent(student) {
 			})
 			detailsPanelButton.addEventListener("click", (e) => {
 				displayActivePanel(detailsPanel)
-				resetActivePanelButton([notesPanelButton, attendancePanelButton], detailsPanelButton)
+				resetActivePanelButton(e)
 				notesPreview.innerHTML = ""
 				notesPanel.innerHTML = ""
+				attendancePanel.style.display = "none"
+				editAbsense.style.display = "none"
+				editTardy.style.display = "none"
+				viewPanel.style.display = "none"
 				sidePanel.removeChild(notesPanel)
-				if(document.querySelector(".side-panel-container").childElementCount>2){
-					document.querySelector(".side-panel-container").removeChild(noteDetailsContainer)
+				if(document.querySelector(".side-panel-container").childElementCount>3){
+					if(noteDetailsContainer){
+						document.querySelector(".side-panel-container").removeChild(noteDetailsContainer)
+						notesPanel.removeChild(noteDetailsContainer)
+					}
 				}
 			})
 			attendancePanelButton.addEventListener("click", (e) => {
 				displayActivePanel(attendancePanel)
-				resetActivePanelButton([notesPanelButton, detailsPanelButton], attendancePanelButton)
-				//if a student has an absene use renderAttendaceTableRow to show the record
-				updateAbsenseView()
-				updateTardyView()
+				resetActivePanelButton(e)
+				updateAbsenseView(student)
+				updateTardyView(student)
+				viewPanel.style.display = "block"
+				if(student.getAbsenses().length){
+					let tbody = document.querySelector(".absenses-view tbody")
+					tbody.innerHTML = ""
+					student.getAbsenses().map(absense =>{
+						let reason;
+						if(absense.getIsExcused()){
+							reason = "Excused"
+						} else if(!absense.getIsExcused()){
+							reason = "Unexcused"
+						}
+						let row = renderAttendanceTableRow(absense.getDate(), reason)
+						tbody.prepend(row)
+					})
+				}
+				if(student.getTardies().length){
+					let tbody = document.querySelector(".tardies-view tbody")
+					tbody.innerHTML = ""
+					student.getTardies().map(tardy =>{
+						let reason;
+						if(tardy.getIsExcused()){
+							reason = "Excused"
+						} else if(!tardy.getIsExcused()){
+							reason = "Unexcused"
+						}
+						let row = renderAttendanceTableRow(tardy.getDate(), reason)
+						tbody.prepend(row)
+					})
+				}
+
 				attendancePanel.addEventListener("click", (e) => {
-					let viewPanel = document.querySelector(".view-attendance-panel")
-					let editPanel = document.querySelector(".edit-attendance-panel")
 					if(Array.from(e.target.classList).includes("add-absense-btn")){
 						viewPanel.style.display = "none"
-						renderEditPanel("absense", "Absense")
+
+						editAbsense.style.display = "flex"
 					} else if(Array.from(e.target.classList).includes("add-tardy-btn")){
 						viewPanel.style.display = "none"
-						renderEditPanel("tardy", "Tardy")
+						editTardy.style.display = "flex"
 					}
 					else if(Array.from(e.target.classList).includes("cancel-attendance-btn")){
-						editPanel.parentElement.removeChild(editPanel)
-						viewPanel.style.display = "block"
+						resetEditAttendanceView()
 					}else if(Array.from(e.target.classList).includes("save-attendance-btn")){
 						let selectedDate = document.querySelector(".date-tool").value
-						let reason = document.querySelector('input[name="reason"]:checked').value
+						let reason = document.querySelector('input[name="reason"]:checked').previousElementSibling.textContent
 						let isExcused;
-						if(reason === "excused"){
+						if(reason === "Excused"){
 							isExcused = true;
-						} else if(reason === "unexcused"){
+						} else if(reason === "Unexcused"){
 							isExcused = false;
 						}
-						let currentlyEditing = document.querySelector(".edit-panel-title").textContent
-						if(currentlyEditing === "New Absense"){
+						if(editAbsense.style.display === "flex"){
 							student.addAbsense(selectedDate, isExcused)
-							updateAbsenseView()
-						} else if(currentlyEditing === "New Tardy"){
+							updateAbsenseView(student)
+							let tbody = document.querySelector(".absenses-view tbody")
+							let row = renderAttendanceTableRow(selectedDate, reason)
+							tbody.prepend(row)
+						} else if(editTardy.style.display === "flex"){
 							student.addTardy(selectedDate, isExcused)
-							updateTardyView()
+							updateTardyView(student)
+							let tbody = document.querySelector(".tardies-view tbody")
+							let row = renderAttendanceTableRow(selectedDate, reason)
+							tbody.prepend(row)
 						}
-
-						editPanel.parentElement.removeChild(editPanel)
-						viewPanel.style.display = "block"
-
+						resetEditAttendanceView()
 					}
 				})
 

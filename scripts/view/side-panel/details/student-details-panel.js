@@ -28,6 +28,7 @@ export function renderDetailsFooter(){
 export function renderDetailsPanel(){
     let detailsPanel = document.createElement("div")
     detailsPanel.classList.add("student-details-panel")
+    detailsPanel.classList.add("add-scroll")
     let identifierGroup = renderIdentifierGroup()
     let cityAndCohortGroup = renderCityAndCohortGroup()
     detailsPanel.appendChild(identifierGroup)

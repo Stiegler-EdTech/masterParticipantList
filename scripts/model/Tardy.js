@@ -5,4 +5,16 @@ export class Tardy {
 		this.student = student;
 		this.id = student.getTardies().length-1;
 	}
+	getDate(){
+		return this.date;
+	}
+	setDate(date){
+		this.date = date
+	}
+	getIsExcused(){
+		return this.isExcused
+	}
+	setIsExcused(isExcused){
+		this.isExcused = this.isExcused
+	}
 }

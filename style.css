@@ -300,14 +300,22 @@
     border: none;
 }
 
-.note-details-footer, .side-panel-footer{
+.note-details-footer{
     position: absolute;
     bottom: 2%;
     overflow: hidden;
     display: flex;
     justify-content: space-between;
     width: 100%;
+}
 
+.side-panel-footer{
+    bottom: 2%;
+    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    padding-top: 5%;
 }
 .student-details-panel{
     position: relative;
@@ -439,6 +447,9 @@
 .add-absense-btn, .add-tardy-btn{
     border: solid 1px black;
     font-size: 1rem;
+}
+.table-body td{
+    width: 50%;
 }
 .add-absense-btn:hover, .add-tardy-btn:hover{
     background-color: rgba(40, 167, 69, 0.5);

@@ -78,9 +78,6 @@ export function runApp(){
 		let newStudent = takeNewParticipantInput(students)
 		renderNewStudent(newStudent);
 		hideNewParticipantPopUp();
-		// addStudentTardy(newStudent, students);
-		// addStudentAbsense(newStudent, students);
-		// addStudentNote(newStudent, students);
 		toggleAll(students)
 	});
 

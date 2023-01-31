@@ -1,7 +1,5 @@
 import { renderStudentTardyButton, renderStudentAbsenseButton } from './student-action-buttons.js'
 import { renderSidePanel } from './side-panel/student-panel.js';
-
-
 import { removeSidePanel } from "../controller/side-panel/remove-side-panel.js";
 import { Student } from "../model/Student.js";
 import { renderDetailsPanel } from "./side-panel/details/student-details-panel.js";
@@ -96,11 +94,9 @@ function displayActivePanel(activePanel){
 	panels.map(panel => {
 		if(panel.className !== "panels"){
 			panel.style.display = "none"
-			// panel.parentElement.removeChild(panel)
 		}
 	})
 	activePanel.style.display = "block"
-	// activePanel.parentElement.appendChild(activePanel)
 	return activePanel;
 }
 

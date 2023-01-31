@@ -263,7 +263,5 @@ export function renderStudentAttendance(){
     viewMainContent.appendChild(tardiesView)
     let footer = renderFooter()
     viewPanel.appendChild(footer)
-    // renderEditPanel("absense", "Absense")
-    // renderEditPanel("tardy", "Tardy")
     return panel
 }

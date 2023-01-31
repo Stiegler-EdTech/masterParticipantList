@@ -38,7 +38,7 @@ function renderPanelButtons(){
     return panels
 }
 
-// add a conditional here to choose between details and notes
+
 export function renderSidePanel(){
     let panels = renderPanelButtons()
     let sidePanelContainer = renderSidePanelContainer()

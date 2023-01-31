@@ -42,7 +42,6 @@ export class Student {
 	addAbsense(date, isExcused) {
 		let newAbsense = new Absense(date, isExcused, this);
 		this.absenses.push(newAbsense);
-		// newAbsense.id = this.absenses.length;
 		absenses.push(newAbsense);
 		return this.absenses;
 	}
@@ -64,7 +63,6 @@ export class Student {
 	addTardy(date, isExcused) {
 		let newTardy = new Tardy(date, isExcused, this);
 		this.tardies.push(newTardy);
-		// newTardy.id = this.tardies.length;
 		tardies.push(newTardy);
 		return this.tardies;
 	}

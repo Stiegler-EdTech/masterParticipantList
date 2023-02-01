@@ -101,6 +101,7 @@ export function renderAttendanceTableRow(date, reason){
     reasonTd.textContent = reason
     tr.appendChild(dateTd)
     tr.appendChild(reasonTd)
+    tr.classList.add("attendance-row")
     return tr;
 }
 function renderFooter(){
@@ -198,6 +199,7 @@ function buildNewReason(parent, lower, upper){
     input.setAttribute("name", "reason")
     input.value = lower
     inputGroup.appendChild(input)
+    return input;
 }
 
 export function renderEditPanel(type, typeUpper){
@@ -234,8 +236,8 @@ export function renderEditPanel(type, typeUpper){
     let newReasonInputGroup = makeElement("div", ["new-reason-input-group", "input-group"])
     newReasonContainer.appendChild(newReasonInputGroup)
 
-    buildNewReason(newReasonInputGroup, "excused", "Excused")
-    buildNewReason(newReasonInputGroup, "unexcused", "Unexcused")
+    let excusedRadioButton = buildNewReason(newReasonInputGroup, "excused", "Excused")
+    let unexcusedRadioButton = buildNewReason(newReasonInputGroup, "unexcused", "Unexcused")
 
     let editFooter = makeElement("div", ["attendance-footer"])
     editPanel.appendChild(editFooter)

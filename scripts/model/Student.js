@@ -43,7 +43,7 @@ export class Student {
 		let newAbsense = new Absense(date, isExcused, this);
 		this.absenses.push(newAbsense);
 		absenses.push(newAbsense);
-		return this.absenses;
+		return newAbsense;
 	}
 	getAbsenses() {
 		return this.absenses;
@@ -64,7 +64,7 @@ export class Student {
 		let newTardy = new Tardy(date, isExcused, this);
 		this.tardies.push(newTardy);
 		tardies.push(newTardy);
-		return this.tardies;
+		return newTardy;
 	}
 	getTardies() {
 		return this.tardies;

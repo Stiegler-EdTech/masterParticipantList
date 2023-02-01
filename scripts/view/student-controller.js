@@ -144,6 +144,7 @@ function resetEditAttendanceView(){
 	viewPanel.style.display = "block"
 	Array.from(document.querySelectorAll(".date-tool")).map(tool => tool.value = new Date().toISOString().split("T")[0])
 	reason? reason.checked = false : null
+	// Array.from(document.querySelectorAll('input[id="excused"]')).map(r => r.checked = true);
 }
 
 
@@ -474,6 +475,8 @@ export function renderNewStudent(student) {
 						}
 						let row = renderAttendanceTableRow(absense.getDate(), reason)
 						tbody.prepend(row)
+						row.id = `absense-${absense.getID()}`
+						// row.classList.add("absense-row")
 					})
 				}
 				if(student.getTardies().length){
@@ -488,13 +491,15 @@ export function renderNewStudent(student) {
 						}
 						let row = renderAttendanceTableRow(tardy.getDate(), reason)
 						tbody.prepend(row)
+						row.id = `tardy-${tardy.getID()}`
+						// row.classList.add("tardy-row")
 					})
 				}
+				// Array.from(document.querySelectorAll('input[id="excused"]')).map(r => {r.checked = true});
 
 				attendancePanel.addEventListener("click", (e) => {
 					if(Array.from(e.target.classList).includes("add-absense-btn")){
 						viewPanel.style.display = "none"
-
 						editAbsense.style.display = "flex"
 					} else if(Array.from(e.target.classList).includes("add-tardy-btn")){
 						viewPanel.style.display = "none"
@@ -512,19 +517,40 @@ export function renderNewStudent(student) {
 							isExcused = false;
 						}
 						if(editAbsense.style.display === "flex"){
-							student.addAbsense(selectedDate, isExcused)
+							let absense = student.addAbsense(selectedDate, isExcused)
+							// console.log(absense)
 							updateAbsenseView(student)
 							let tbody = document.querySelector(".absenses-view tbody")
 							let row = renderAttendanceTableRow(selectedDate, reason)
 							tbody.prepend(row)
+							row.id = `absense-${absense.getID()}`
+							// row.classList.add("absense-row")
 						} else if(editTardy.style.display === "flex"){
-							student.addTardy(selectedDate, isExcused)
+							let tardy = student.addTardy(selectedDate, isExcused)
+							// console.log(tardy)
 							updateTardyView(student)
 							let tbody = document.querySelector(".tardies-view tbody")
 							let row = renderAttendanceTableRow(selectedDate, reason)
 							tbody.prepend(row)
+							row.id = `tardy-${tardy.getID()}`
+							// row.classList.add("tardy-row")
 						}
 						resetEditAttendanceView()
+					}else if(Array.from(e.target.classList).includes("attendance-row")|| Array.from(e.target.parentElement.classList).includes("attendance-row")){
+						let editingType = e.target.parentElement.id.split("-")[0]
+						viewPanel.style.display = "none"
+						if(editingType === "absense"){
+							editAbsense.style.display = "flex"
+							let editingDate = e.target.parentElement.querySelectorAll("td")[0]
+							let editingReason = e.target.parentElement.querySelectorAll("td")[1]
+							editAbsense.querySelector(".date-tool").value = editingDate
+							// editAbsense.querySelector(`input[id=]`)
+						}
+						if(editingType === "tardy"){
+							editTardy.style.display = "flex"
+							console.log(e.target.parentElement)
+							// editTardy.querySelector(".date-tool")
+						}
 					}
 				})
 

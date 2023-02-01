@@ -3,7 +3,7 @@ export class Tardy {
 		this.date = date
 		this.isExcused = isExcused;
 		this.student = student;
-		this.id = student.getTardies().length-1;
+		this.id = student.getTardies().length;
 	}
 	getDate(){
 		return this.date;
@@ -16,5 +16,8 @@ export class Tardy {
 	}
 	setIsExcused(isExcused){
 		this.isExcused = this.isExcused
+	}
+	getID(){
+		return this.id
 	}
 }

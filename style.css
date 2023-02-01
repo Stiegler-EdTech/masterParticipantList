@@ -233,6 +233,7 @@
     margin: auto;
     justify-content: space-between;
     /* padding-top: 5%; */
+    margin-top: 20%;
 }
 .edit-capstone-group{
     display: flex;

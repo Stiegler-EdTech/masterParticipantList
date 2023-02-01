@@ -17,5 +17,8 @@ export class Absense {
 	setIsExcused(isExcused){
 		this.isExcused = this.isExcused
 	}
+	getID(){
+		return this.id
+	}
 
 }

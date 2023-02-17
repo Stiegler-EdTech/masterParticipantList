@@ -460,6 +460,8 @@ export function renderNewStudent(student) {
 			attendancePanelButton.addEventListener("click", (e) => {
 				displayActivePanel(attendancePanel)
 				resetActivePanelButton(e)
+				notesPreview.innerHTML = ""
+				notesPanel.innerHTML = ""
 				updateAbsenseView(student)
 				updateTardyView(student)
 				viewPanel.style.display = "block"
@@ -501,56 +503,99 @@ export function renderNewStudent(student) {
 					if(Array.from(e.target.classList).includes("add-absense-btn")){
 						viewPanel.style.display = "none"
 						editAbsense.style.display = "flex"
+						document.querySelector(".edit-absense").querySelector(".edit-panel-title").textContent = 'New Absense'
 					} else if(Array.from(e.target.classList).includes("add-tardy-btn")){
+						document.querySelector(".edit-tardy").querySelector(".edit-panel-title").textContent = 'New Tardy'
 						viewPanel.style.display = "none"
 						editTardy.style.display = "flex"
 					}
 					else if(Array.from(e.target.classList).includes("cancel-attendance-btn")){
 						resetEditAttendanceView()
 					}else if(Array.from(e.target.classList).includes("save-attendance-btn")){
-						let selectedDate = document.querySelector(".date-tool").value
-						let reason = document.querySelector('input[name="reason"]:checked').previousElementSibling.textContent
-						let isExcused;
-						if(reason === "Excused"){
-							isExcused = true;
-						} else if(reason === "Unexcused"){
-							isExcused = false;
-						}
-						if(editAbsense.style.display === "flex"){
-							let absense = student.addAbsense(selectedDate, isExcused)
-							// console.log(absense)
-							updateAbsenseView(student)
-							let tbody = document.querySelector(".absenses-view tbody")
-							let row = renderAttendanceTableRow(selectedDate, reason)
-							tbody.prepend(row)
-							row.id = `absense-${absense.getID()}`
-							// row.classList.add("absense-row")
-						} else if(editTardy.style.display === "flex"){
-							let tardy = student.addTardy(selectedDate, isExcused)
-							// console.log(tardy)
-							updateTardyView(student)
-							let tbody = document.querySelector(".tardies-view tbody")
-							let row = renderAttendanceTableRow(selectedDate, reason)
-							tbody.prepend(row)
-							row.id = `tardy-${tardy.getID()}`
-							// row.classList.add("tardy-row")
-						}
+
+						// if(document.querySelector(".edit-panel-title").textContent.includes("Edit")){
+						// 	let titleType = document.querySelector(".edit-panel-title").textContent.split(" ")[1]
+						// 	document.querySelector(".edit-panel-title").textContent = `New ${titleType}`
+						// 	document.querySelector(".editing").querySelectorAll("td")[0].textContent = selectedDate;
+						// 	document.querySelector(".editing").querySelectorAll("td")[1].textContent = reason;
+						// 	document.querySelector(".editing").classList.remove("editing")
+						// } else{
+							if(editAbsense.style.display === "flex"){
+								let selectedDate = document.querySelector(".edit-absense").querySelector(".date-tool").value
+								let reason = document.querySelector(".edit-absense").querySelector('input[name="reason"]:checked').previousElementSibling.textContent
+								let isExcused;
+								if(reason === "Excused"){
+									isExcused = true;
+								} else if(reason === "Unexcused"){
+									isExcused = false;
+								}
+								if(document.querySelector(".edit-absense").querySelector(".edit-panel-title").textContent.includes("Edit")){
+									// let titleType = document.querySelector(".edit-absense").querySelector(".edit-panel-title").textContent.split(" ")[1]
+									// document.querySelector(".edit-absense").querySelector(".edit-panel-title").textContent = `New ${titleType}`
+									document.querySelector(".editing").querySelectorAll("td")[0].textContent = selectedDate;
+									document.querySelector(".editing").querySelectorAll("td")[1].textContent = reason;
+									document.querySelector(".editing").classList.remove("editing")
+								} else{
+									let absense = student.addAbsense(selectedDate, isExcused)
+									// console.log(absense)
+									updateAbsenseView(student)
+									let tbody = document.querySelector(".absenses-view tbody")
+									let row = renderAttendanceTableRow(selectedDate, reason)
+									tbody.prepend(row)
+									row.id = `absense-${absense.getID()}`
+									// row.classList.add("absense-row")
+								}
+							} else if(editTardy.style.display === "flex"){
+								let selectedDate = document.querySelector(".edit-tardy").querySelector(".date-tool").value
+								let reason = document.querySelector(".edit-tardy").querySelector('input[name="reason"]:checked').previousElementSibling.textContent
+								let isExcused;
+								if(reason === "Excused"){
+									isExcused = true;
+								} else if(reason === "Unexcused"){
+									isExcused = false;
+								}
+								if(document.querySelector(".edit-tardy").querySelector(".edit-panel-title").textContent.includes("Edit")){
+									// let titleType = document.querySelector(".edit-tardy").querySelector(".edit-panel-title").textContent.split(" ")[1]
+									// document.querySelector(".edit-tardy").querySelector(".edit-panel-title").textContent = `New ${titleType}`
+									document.querySelector(".editing").querySelectorAll("td")[0].textContent = selectedDate;
+									document.querySelector(".editing").querySelectorAll("td")[1].textContent = reason;
+									document.querySelector(".editing").classList.remove("editing")
+								} else{
+									let tardy = student.addTardy(selectedDate, isExcused)
+									// console.log(tardy)
+									updateTardyView(student)
+									let tbody = document.querySelector(".tardies-view tbody")
+									let row = renderAttendanceTableRow(selectedDate, reason)
+									tbody.prepend(row)
+									row.id = `tardy-${tardy.getID()}`
+									// row.classList.add("tardy-row")
+								}
+							}
+						// }
 						resetEditAttendanceView()
 					}else if(Array.from(e.target.classList).includes("attendance-row")|| Array.from(e.target.parentElement.classList).includes("attendance-row")){
 						let editingType = e.target.parentElement.id.split("-")[0]
+						e.target.parentElement.classList.add("editing")
 						viewPanel.style.display = "none"
 						if(editingType === "absense"){
 							editAbsense.style.display = "flex"
-							let editingDate = e.target.parentElement.querySelectorAll("td")[0]
-							let editingReason = e.target.parentElement.querySelectorAll("td")[1]
+							let editingDate = e.target.parentElement.querySelectorAll("td")[0].textContent
+							let editingReason = e.target.parentElement.querySelectorAll("td")[1].textContent.toLowerCase()
 							editAbsense.querySelector(".date-tool").value = editingDate
-							// editAbsense.querySelector(`input[id=]`)
+							document.querySelector(".edit-absense").querySelector(".edit-panel-title").textContent = "Edit Absence"
+							document.querySelector(".edit-absense").querySelector(".date-tool").value = editingDate;
+							document.querySelector(".edit-absense").querySelector(`input[id="${editingReason}"`).checked = true
 						}
 						if(editingType === "tardy"){
 							editTardy.style.display = "flex"
-							console.log(e.target.parentElement)
-							// editTardy.querySelector(".date-tool")
+							let editingDate = e.target.parentElement.querySelectorAll("td")[0].textContent
+							let editingReason = e.target.parentElement.querySelectorAll("td")[1].textContent.toLowerCase()
+							editTardy.querySelector(".date-tool").value = editingDate
+							document.querySelector(".edit-tardy").querySelector(".edit-panel-title").textContent = "Edit Tardy"
+							document.querySelector(".edit-tardy").querySelector(".date-tool").value = editingDate;
+							document.querySelector(".edit-tardy").querySelector(`input[id="${editingReason}"`).checked = true
 						}
+						// e.target.parentElement.classList.remove("editing")
 					}
 				})
 

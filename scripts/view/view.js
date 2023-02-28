@@ -64,10 +64,31 @@ let exitButton = document.querySelector(".exit-pop-up-button");
 let submitButton = document.querySelector(".new-participant-button");
 let list = document.querySelector(".participant-list tbody");
 let additionalFilters = document.querySelector(".selectBox")
+const starpiURL = `https://strapi-dev.stiegleredtech.org` || `http://strapi-dev.stiegleredtech.org`
 
 
 let filters = getAllFilters()
 let [probationCheckbox, electiveCheckbox, notesCheckbox, mentorCheckbox, metCheckbox, absenseOption, tardyOption, cityOption, cohortOption, electiveOption] = filters
+
+const populateStudentArray = (studentArray) => {
+
+	fetch(`${starpiURL}/api/students`)
+	.then((data) => data.json())
+	.then(response => {
+		response.data.forEach(student => {
+			let studentObj = student.attributes
+			let userName = `${studentObj.firstname.toLowerCase()}${studentObj.lastname.toLowerCase()}`;
+			let newStudent = new Student(userName, studentObj.firstname, studentObj.lastname)
+			newStudent.addCity(studentObj.city);
+			newStudent.addCohort(studentObj.cohort);
+			// studentArray.push(newStudent);
+		})
+	});
+}
+
+const renderAllStudents = (studentArray) => {
+	studentArray.forEach((student) => renderNewStudent(student));
+}
 
 export function runApp(){
 	newParticipantButton.addEventListener("click", showNewParticipantPopUp);
@@ -94,7 +115,12 @@ export function runApp(){
 	additionalFilters.addEventListener("click", () => {toggleAll(students)})
 
 
-
+	populateStudentArray(students);
+	setTimeout(() => {
+		renderAllStudents(students)
+		console.log(students);
+	}, 1500);
+	// renderAllStudents(students);
 
 }
 
